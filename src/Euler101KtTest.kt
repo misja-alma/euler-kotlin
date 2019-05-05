@@ -1,3 +1,4 @@
+import Fraction.Companion.fraction
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 
@@ -10,13 +11,13 @@ internal class Euler101KtTest {
         // Solution: y = 0, x = 1, z = 2
 
         var equations = arrayOf(
-            arrayOf(Fraction(1), Fraction(1), Fraction(0), Fraction(1)),
-            arrayOf(Fraction(0), Fraction(1), Fraction(1), Fraction(2)),
-            arrayOf(Fraction(1), Fraction(0), Fraction(1), Fraction(3)))
+            arrayOf(fraction(1), fraction(1), fraction(0), fraction(1)),
+            arrayOf(fraction(0), fraction(1), fraction(1), fraction(2)),
+            arrayOf(fraction(1), fraction(0), fraction(1), fraction(3)))
 
         var solution = solveEquations(equations)
         
-        assertArrayEquals(arrayOf(Fraction(1), Fraction(0), Fraction(2)), solution, "Actual: ${solution.joinToString(",")}")
+        assertArrayEquals(arrayOf(fraction(1), fraction(0), fraction(2)), solution, "Actual: ${solution.joinToString(",")}")
 
         // x + 2y + 3z  = 1
         // x + y - z = 2
@@ -24,12 +25,12 @@ internal class Euler101KtTest {
         // Solution: y = 0.6, x = 1, z = -0.4
 
         equations = arrayOf(
-            arrayOf(Fraction(1), Fraction(2), Fraction(3), Fraction(1)),
-            arrayOf(Fraction(1), Fraction(1), Fraction(-1), Fraction(2)),
-            arrayOf(Fraction(0), Fraction(-1), Fraction(1), Fraction(-1)))
+            arrayOf(fraction(1), fraction(2), fraction(3), fraction(1)),
+            arrayOf(fraction(1), fraction(1), fraction(-1), fraction(2)),
+            arrayOf(fraction(0), fraction(-1), fraction(1), fraction(-1)))
 
         solution = solveEquations(equations)
 
-        assertArrayEquals(arrayOf(Fraction(1), Fraction(6, 10), Fraction(-4, 10)), solution, "Actual: ${solution.joinToString(",")}")
+        assertArrayEquals(arrayOf(fraction(1), fraction(6, 10), fraction(-4, 10)), solution, "Actual: ${solution.joinToString(",")}")
     }
 }
