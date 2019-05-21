@@ -7,21 +7,21 @@ fun main() {
     // So if 3rd point's cross product > 0, origin's cross product must be >= 0 and vice versa.
     // If this is true for all 3 point-line combinations, then the origin must lie within the triangle.
 
-    println(isWithinTriangle(arrayOf(arrayOf(-1, 0), arrayOf(0, 2), arrayOf(1, 0)), arrayOf(0, -1)))
-
     val input = ClassLoader.getSystemResource("p102_triangles.txt").readText()
 
     val triangles = input.lines().map {
         val xs = it.split(",").map { it.toInt() }.toIntArray()
-        arrayOf(arrayOf(xs[0], xs[1]), arrayOf(xs[2], xs[3]), arrayOf(xs[4], xs[5]))
+        arrayOf(point(xs[0], xs[1]), point(xs[2], xs[3]), point(xs[4], xs[5]))
     }
-    val origin = arrayOf(0, 0)
+    val origin = point(0, 0)
     val solution = triangles.count { isWithinTriangle(it, origin) }
 
     println ("Solution: $solution")
 }
 
 typealias Point = Array<Int>
+
+fun point(x: Int, y: Int): Point = arrayOf(x, y)
 
 fun isWithinTriangle(triangle: Array<Point>, point: Point): Boolean {
     val linesWithPoints = arrayOf(
@@ -31,7 +31,7 @@ fun isWithinTriangle(triangle: Array<Point>, point: Point): Boolean {
     )
 
     return linesWithPoints.all { (ab, p) ->
-        // take cross p AB x AP where AB is the line.
+        // take cross product AB x AP where AB is the line.
         val orgOrientation = crossProduct2D(pointsToVector(ab[0], ab[1]), pointsToVector(ab[0], point))
         val point3Orientation = crossProduct2D(pointsToVector(ab[0], ab[1]), pointsToVector(ab[0], p))
         orgOrientation == 0 || orgOrientation.sign == point3Orientation.sign
