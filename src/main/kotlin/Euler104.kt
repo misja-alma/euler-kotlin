@@ -1,6 +1,10 @@
 import java.math.BigInteger
 
 fun main() {
+    // Find the lower end pandigit Fibonacci's fast by using a modular fibonacci function using only longs.
+    // Then for each lower pandigit, calculate the full Fibonacci nr to check if the start is also pandigit.
+    // To speed that up a bit, we use BigIntegers with limited precision because only the first 10 digits need to be precise.
+
     val indexSequence = generateSequence (1) { it + 1 }
     val (_, solution) = moduloFibonacci(1000000000).zip(indexSequence).find { (f, i) ->
         isPandigit(f.toString()) && isPandigit(fibRecursive(i).toBigInteger().toString().substring(0, 9))
@@ -17,9 +21,9 @@ fun isPandigit(s: String): Boolean {
 fun moduloFibonacci(modulo: Long): Sequence<Long> = generateSequence (Pair(1L, 1L)) { (x1, x2) -> Pair (x2, (x1 + x2).rem(modulo)) }.map { it.first }
 
 const val precision = 500000
-val cache2 = mutableMapOf(0 to BigIntWithPrecision(BigInteger.ZERO, precision),
+val cache = mutableMapOf(0 to BigIntWithPrecision(BigInteger.ZERO, precision),
         1 to BigIntWithPrecision(BigInteger.ONE, precision))
-fun fibRecursive(n: Int): BigIntWithPrecision = cache2[n] ?: {
+fun fibRecursive(n: Int): BigIntWithPrecision = cache[n] ?: {
     val result = if (n.rem(2) == 1) {
         val f1 = fibRecursive((n + 1)/2)
         val f2 = fibRecursive(n / 2)
@@ -29,7 +33,7 @@ fun fibRecursive(n: Int): BigIntWithPrecision = cache2[n] ?: {
         val f2 = fibRecursive(n / 2 - 1)
         (f2.shiftLeft(1) + f1) * f1
     }
-    cache2[n] = result
+    cache[n] = result
     result
 }()
 
