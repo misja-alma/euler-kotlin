@@ -18,4 +18,25 @@ internal class UtilsKtTest {
     fun sqrt_shouldReturnSquareRootWithinErrorMargin() {
         assertEquals(Math.sqrt(5.0), sqrt(BigDecimal(5), 7).toDouble(), 0.000001)
     }
+
+    @Test
+    fun isPrime_shouldCorrectlyRecognizePrimeNumbers() {
+        val cache = PrimeCache()
+
+        assertTrue(isPrime(2, cache))
+        assertFalse(isPrime(1, cache))
+        assertFalse(isPrime(4, cache))
+        assertFalse(isPrime(25, cache))
+        assertTrue(isPrime(11, cache))
+        assertFalse(isPrime(12, cache))
+        assertFalse(isPrime(21, cache))
+        assertTrue(isPrime(37, cache))
+    }
+
+    @Test
+    fun primes_shouldReturnStreamOfPrimes() {
+        val cache = PrimeCache()
+
+        assertEquals(listOf<Long>(2, 3, 5, 7, 11), primes(cache).take(5).toList())
+    }
 }

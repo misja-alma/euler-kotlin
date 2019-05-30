@@ -37,7 +37,7 @@ fun main() {
         val end = next[0] + next[1] - 1
         for (i in start .. end) {
             if (formsSpecialSumSet(next, i, subsetCache)) {
-                pq.add(clone(next) + i)
+                pq.add(next.clone() + i)
             }
         }
     }

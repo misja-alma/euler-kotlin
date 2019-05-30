@@ -1,7 +1,3 @@
-fun <T> List<T>.init(): List<T> = take(this.size - 1)
-
-fun clone(ls: List<Int>): List<Int> = ls.map { it }
-
 // For each split n, s-n:
 // * s-n should be a specialsumset
 // * each combination n + subset of (s-n) should:
@@ -11,7 +7,7 @@ fun clone(ls: List<Int>): List<Int> = ls.map { it }
 // NOTE: requires that the set is sorted ascendingly
 fun formsSpecialSumSet(set: List<Int>, newElement: Int, subsetCache: MutableMap<List<Int>, Boolean>): Boolean {
     val smallerSubsets = oneSmallerSubsets(set)
-    val newList = clone(set) + newElement
+    val newList = set.clone() + newElement
 
     val result = smallerSubsets.all {
         isSpecialSumSet(it, subsetCache)
@@ -31,20 +27,6 @@ fun oneSmallerSubsets(set: List<Int>): List<List<Int>> =
 // NOTE: requires that the set is sorted ascendingly
 fun isSpecialSumSet(ls: List<Int>, cache: MutableMap<List<Int>, Boolean>): Boolean =
         (ls.size < 3) || if (cache.containsKey(ls)) cache[ls]!! else formsSpecialSumSet(ls.init(), ls.last(), cache)
-
-fun <T> List<T>.subLists(size: Int): Set<List<T>> =
-        (0..this.size - size).flatMap { i ->
-            val el = listOf(this[i])
-            if (size == 1) {
-                listOf(el)
-            } else {
-                this.subList(i + 1, this.size).subLists(size - 1).map { el + it }
-            }
-        }.toSet()
-
-fun <T> List<T>.powerSet(): Set<List<T>> =
-        (1..this.size).flatMap { this.subLists(it) }.toSet()
-
 
 fun obeysSumLaws(ls: List<Int>, x: Int): Boolean =
         ls.powerSet().all { it1 ->

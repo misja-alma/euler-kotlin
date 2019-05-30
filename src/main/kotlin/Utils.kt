@@ -40,3 +40,44 @@ fun sqrt(x: BigDecimal, nrDigits: Int): BigDecimal {
 
     return xn
 }
+
+fun divides(numerator: Long, divider: Long): Boolean = numerator.rem(divider) == 0L
+
+class PrimeCache {
+    private val cache = sortedSetOf(2L, 3L)
+
+    fun contains(x: Long): Boolean = cache.contains(x)
+
+    fun last(): Long = cache.last()!!
+
+    fun sequence(): Sequence<Long> = cache.iterator().asSequence()
+
+    fun add(x: Long) { cache.add(x) }
+}
+
+fun primes(cache: PrimeCache): Sequence<Long> {
+    val largestKnown = cache.last()
+    // TODO could be optimized even more, because this assumes that cache will only be updated within this method
+    // In reality it could be updated elsewhere too. To use that to our advantage, we should check in every call to next
+    // if we are within the bounds of our cache or not.
+    return cache.sequence() + generateSequence(largestKnown + 2) { it + 2 }.filter { isPrime(it, cache) }
+}
+
+fun isPrime(x: Long, cache: PrimeCache): Boolean =
+        if (x <= 1) false else if (cache.contains(x)) true else if (cache.last() >= x) false else {
+            // First check all primes in the cache. When not found, continue expanding the cache until > sqrt x
+            if (cache.sequence().any { divides(x, it) }) false else {
+                var counter = cache.last() + 2
+                var dividerFound = false
+                while (!dividerFound && counter * counter <= x) {
+                    dividerFound = if (isPrime(counter, cache)) {
+                        cache.add(counter)
+                        divides(x, counter)
+                    } else {
+                        false
+                    }
+                    counter += 2
+                }
+                !dividerFound
+            }
+        }
