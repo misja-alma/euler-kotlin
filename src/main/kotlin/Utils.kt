@@ -81,3 +81,36 @@ fun isPrime(x: Long, cache: PrimeCache): Boolean =
                 !dividerFound
             }
         }
+
+fun primesBySieve(maxPrime: Int): List<Int> =
+        if (maxPrime < 2) listOf() else {
+            val marked = BooleanArray(maxPrime  - 1) // Start counting at 2
+            val result = mutableListOf<Int>()
+            var nextPrimeIndex = marked.indices.find { !marked[it] }
+            while (nextPrimeIndex != null) {
+                val nextPrime = nextPrimeIndex + 2
+                result += nextPrime
+                for (i in nextPrime.toLong() * nextPrime .. maxPrime step nextPrime.toLong()) marked[i.toInt() - 2] = true
+                nextPrimeIndex = (nextPrimeIndex + 1 .. maxPrime - 2).find { !marked[it] }
+            }
+
+            result
+        }
+
+fun primesBySieve(from: Long, segmentSize: Int, rootPrimes: List<Int>): List<Long> {
+    val marked = BooleanArray(segmentSize)
+    // Skip prime 2
+    rootPrimes.drop(1).forEach {
+        var i = from + it - from % it
+        do {
+            marked[(i - from).toInt()] = true
+            i += it
+        } while (i < from + segmentSize)
+    }
+
+    val result = mutableListOf<Long>()
+    val start = if (from % 2L == 0L) from + 1 else from
+    for (i in start until from + segmentSize step 2) if (!marked[(i - from).toInt()]) result.add(i)
+
+    return result
+}

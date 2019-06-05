@@ -39,4 +39,9 @@ internal class UtilsKtTest {
 
         assertEquals(listOf<Long>(2, 3, 5, 7, 11), primes(cache).take(5).toList())
     }
+
+    @Test
+    fun primesBySieve_shouldReturnPrimeNumbers() {
+        assertEquals(listOf(2, 3, 5, 7, 11, 13, 17, 19), primesBySieve(19))
+    }
 }
