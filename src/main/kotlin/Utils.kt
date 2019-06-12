@@ -1,6 +1,33 @@
 import java.math.BigDecimal
 import java.math.BigInteger
 import java.math.MathContext
+import java.util.*
+
+fun toDigits(x: Int): List<Int> {
+    val digits = LinkedList<Int>()
+    var remain = x
+    do {
+        val digit = remain % 10
+        remain /= 10
+        digits.push(digit)
+    } while (remain > 0)
+
+    return digits
+}
+
+fun toDigits(x: Long): List<Int> {
+    val digits = LinkedList<Int>()
+    var remain = x
+    do {
+        val digit = remain % 10
+        remain /= 10
+        digits.push(digit.toInt())
+    } while (remain > 0)
+
+    return digits
+}
+
+fun fromDigits(ints: List<Int>): Long = if (ints.isEmpty()) 0L else ints.last() + 10 * fromDigits(ints.init())
 
 fun gcd(x: Long, y: Long): Long {
 

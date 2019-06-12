@@ -14,7 +14,7 @@ fun nrFillings(blockSize: Int, totalSize: Int): Long {
 
     val (_, counts) = generateSequence(Pair(blockSize, stateForBlockSize)){ (length, state) -> Pair(length + 1, newState2(state))}
             .dropWhile { it.first < totalSize}
-            .iterator().next()
+            .first()
 
     return counts.totalCount - 1 // Don't count the empty filling
 }

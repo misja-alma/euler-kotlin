@@ -12,7 +12,7 @@ fun main() {
 
     val (solution, _) = generateSequence(Pair(blockSize, stateForBlockSize)){ (length, state) -> Pair(length + 1, newState(state))}
             .dropWhile { it.second.totalCount <= 1000000}
-            .iterator().next()
+            .first()
 
     println ("Solution: $solution")
 }

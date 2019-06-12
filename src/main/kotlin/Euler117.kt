@@ -4,7 +4,7 @@ fun main() {
     val initialState = listOf<Long>(0, 1) // The counts of a single space; 0 have zero empty, 1 has 1 empty space.
     val (_, counts) = generateSequence (Pair(1, initialState)) { (length, state) -> length + 1 to generateNewCounts(state)}
             .dropWhile { it.first < 50 }
-            .iterator().next()
+            .first()
 
     println ("Solution: ${counts.sum()}")
 }

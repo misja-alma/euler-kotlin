@@ -5,7 +5,7 @@ fun main() {
 
     val (_, finalCounts) = generateSequence(Pair(3, stateFor3)){ (length, state) -> Pair(length + 1, newState(state))}
             .dropWhile { it.first < 50 }
-            .iterator().next()
+            .first()
 
     println ("Solution: ${finalCounts.totalCount}")
 }

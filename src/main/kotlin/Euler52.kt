@@ -1,29 +1,3 @@
-import java.util.*
-
-fun toDigits(x: Int): List<Int> {
-    val digits = LinkedList<Int>()
-    var remain = x
-    do {
-        val digit = remain % 10
-        remain /= 10                            
-        digits.push(digit)
-    } while (remain > 0)
-
-    return digits
-}
-
-fun toDigits(x: Long): List<Int> {
-    val digits = LinkedList<Int>()
-    var remain = x
-    do {
-        val digit = remain % 10
-        remain /= 10
-        digits.push(digit.toInt())
-    } while (remain > 0)
-
-    return digits
-}
-
 fun isPermutedMultiple(nrMultiples: Int, x: Int): Boolean {
     val digits = toDigits(x).toSet()
     return (2 .. nrMultiples).all { m -> toDigits(x * m).toSet() == digits}
