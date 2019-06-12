@@ -31,7 +31,7 @@ fun fromDigits(ints: List<Int>): Long = if (ints.isEmpty()) 0L else ints.last() 
 
 fun gcd(x: Long, y: Long): Long {
 
-    fun doGcd(big: Long, small: Long): Long {
+    tailrec fun doGcd(big: Long, small: Long): Long {
         val remainder = big % small
         return if (remainder == 0L) small else doGcd(small, remainder)
     }
@@ -44,7 +44,7 @@ fun gcd(x: Long, y: Long): Long {
 
 fun gcd(x: BigInteger, y: BigInteger): BigInteger {
 
-    fun doGcd(big: BigInteger, small: BigInteger): BigInteger {
+    tailrec fun doGcd(big: BigInteger, small: BigInteger): BigInteger {
         val remainder = big % small
         return if (remainder == BigInteger.ZERO) small else doGcd(small, remainder)
     }
