@@ -38,8 +38,6 @@ fun generatePolynomialValueFor(coefs: Array<Fraction<BigInteger>>, input: Int): 
         fraction(BigInteger.ZERO),
         { total, next -> total + next })
 
-fun pow(x: Long, to: Int): Long = if (to == 0) 1L else x * pow(x, to - 1)
-
 fun un(n: Long): Long =
     1L - n + pow(n, 2) - pow(n, 3) + pow(n, 4) - pow(n, 5) + pow(n, 6) - pow(n, 7) + pow(n, 8) - pow(n, 9) + pow(n, 10)
 

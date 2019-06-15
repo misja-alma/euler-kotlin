@@ -141,3 +141,5 @@ fun primesBySieve(from: Long, segmentSize: Int, rootPrimes: List<Int>): List<Lon
 
     return result
 }
+
+fun pow(x: Long, to: Int): Long = if (to == 0) 1L else x * pow(x, to - 1)
