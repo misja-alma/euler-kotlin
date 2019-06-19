@@ -142,4 +142,24 @@ fun primesBySieve(from: Long, segmentSize: Int, rootPrimes: List<Int>): List<Lon
     return result
 }
 
+typealias FactorCache = MutableMap<Long, List<Long>>
+
+/**
+ *  Returns all prime factors of n.
+ *  Note that for prime nrs, this function will return n itself as well. It will also update the caches.
+ */
+fun primeFactors(n: Long, factorCache: FactorCache, primeCache: PrimeCache): List<Long> {
+    val cached = factorCache[n]
+    return cached ?: run {
+        val factor = primes(primeCache).dropWhile{ p -> p * p <= n && n % p != 0L }.first()
+        val result = if (factor == n || n % factor != 0L) {
+            listOf(n)
+        } else {
+            listOf(factor) + primeFactors(n / factor, factorCache, primeCache)
+        }
+        factorCache[n] = result
+        result
+    }
+}
+
 fun pow(x: Long, to: Int): Long = if (to == 0) 1L else x * pow(x, to - 1)

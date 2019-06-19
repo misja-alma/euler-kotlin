@@ -44,4 +44,17 @@ internal class UtilsKtTest {
     fun primesBySieve_shouldReturnPrimeNumbers() {
         assertEquals(listOf(2, 3, 5, 7, 11, 13, 17, 19), primesBySieve(19))
     }
+
+    @Test
+    fun primeFactors_shouldReturnAllPrimeFactors() {
+        val factorCache = mutableMapOf<Long, List<Long>>()
+        val primeCache = PrimeCache()
+
+        assertEquals(listOf(2L), primeFactors(2, factorCache, primeCache))
+        assertEquals(listOf(3L), primeFactors(3, factorCache, primeCache))
+        assertEquals(listOf(2L, 2L), primeFactors(4, factorCache, primeCache))
+        assertEquals(listOf(2L, 3L), primeFactors(6, factorCache, primeCache))
+        assertEquals(listOf(2L, 2L, 2L, 3L), primeFactors(24, factorCache, primeCache))
+        assertEquals(listOf(5L, 5L), primeFactors(25, factorCache, primeCache))
+    }
 }
